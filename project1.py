@@ -49,23 +49,58 @@ print(d)
 
 
 
+
 class Ecosystem:
 
     def __init__(self,resources,species_list):
         self.resources=resources
-        self.species_list=species_list
+        self.species_list=[]
 
     def add_species(self, species):
-        pass
+        if species not in self.species_list:
+            self.species_list.append(species)
+            print(f"Species {species} added to the ecosystem {self}.")
+        else:
+            raise ValueError(f"Species {species} already exists in the ecosystem {self}.")
 
     def search_species(self, species):
-        pass
+        if species in self.species_list:
+            return species
+        else:
+            raise ValueError(f"Species {species} not found in the ecosystem {self}.")
+
 
     def remove_species(self,species):
-        pass
-
+        if species in self.species_list:
+            self.species_list.remove(species)
+            print(f"Species {species} removed from the ecosystem {self}.")
+        else:
+            raise ValueError(f"Species {species} not found in the ecosystem {self}.")
+#isws
     def update_species(self,species):
-        pass      
+        if species in self.species_list:
+            return species
+            while True:
+                x=str(input("Would you like to update the species?"))
+                if x.lower()=="yes":
+                    name=str(input("Enter new name:"))
+                    population=int(input("Enter new population:"))
+                    growth_rate=int(input("Enter new growth rate:"))
+                    mutation_rate=float(input("Enter new mutation rate:"))
+                    old_species=species
+                    species.name=name
+                    species.population=population
+                    species.growth_rate=growth_rate
+                    species.mutation_rate=mutation_rate
+                    print(f"Species updated. Old Species: {old_species}, New Species: {species}")
+                    break
+                elif x.lower()=="no":
+                    break
+                else:
+                    print("Invalid input. Please enter 'yes' or 'no'.")
+        else:
+            raise ValueError(f"Species {species} not found in the ecosystem {self}.")
+            
 
     def display(self):
         pass
@@ -77,3 +112,9 @@ class Ecosystem:
         pass 
 
 
+print(d)
+e=Ecosystem(100000,[])
+e.add_species(d)
+print(e.search_species(d))
+e.remove_species(d)
+print(e.species_list)
