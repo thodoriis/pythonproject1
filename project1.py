@@ -53,6 +53,7 @@ print(d)
 
 
 
+
 class Ecosystem:
 
     def __init__(self,resources,species_list):
@@ -120,22 +121,25 @@ class Ecosystem:
             species.mutate()
             species.reproduce(self.resources)
             population_sum=population_sum + species.population
-        self.update_resources(-population_sum)
-
-    def __str__(self):
-        print(f"Resources: {self.resources}")
-        for species in self.species_list:
-            print(f"Species:{self.name}")
-print(e)
+            self.resources=self.resources-species.population
+        
+        if self.resources<0:
+            return f"Not enough resources, {abs(self.resources)} animals left without food"
+        elif self.resources==0:
+            return f"Resources were exactly enough for the population."
+        else:
+            return f"Resources were enough. {self.resources} resources left."
+#den xreiazetai __str__ giati exei to display
 e=Ecosystem(100000,[])
 e.add_species(d)
 e.add_species(c)
-
+e.add_species(f)
+f=Species("Elephant",2,9000000,0.99)
 print(e.search_species(d))
 print(e.species_list)
 e.remove_species(d)
 c=Species("Cat",20,40,random.random())
-e.search_species(d)
+e.search_species(f)
 e.update_species(c)
 print(e.species_list)
 print(e.display())
