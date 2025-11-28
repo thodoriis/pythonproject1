@@ -14,9 +14,8 @@ class Species:
             current_growth_rate=self.growth_rate//2
         else :
             current_growth_rate=self.growth_rate
-        
         self.population += current_growth_rate
-        print(self.population)
+        print(f"Past Population: {self.population - current_growth_rate}, New Population: {self.population}")
 
     def mutate(self):
         random_choice = random.choices ([0,1],weights=[self.mutation_rate,1-self.mutation_rate])[0]
@@ -24,15 +23,15 @@ class Species:
             self.growth_rate=self.growth_rate * random.choice([1.1,0.7])
 
 
-    def data(self):
-        print ( f"Species Name: {self.name}, Population: {self.population} ")
+    def __str__(self):
+        return f"Species Name: {self.name}, Population: {self.population}, Growth Rate: {self.growth_rate}, Mutation Rate: {self.mutation_rate}"
         
 
 d=Species("Dog",10000,200,random.random())
+print(d)
 d.reproduce(5000)
 d.mutate()
-d.data()
-
+print(d)
 
 
 
@@ -78,4 +77,3 @@ class Ecosystem:
         pass 
 
 
-jgniwvin
