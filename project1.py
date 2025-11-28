@@ -78,11 +78,21 @@ class Ecosystem:
             raise ValueError(f"Species {species} not found in the ecosystem {self}.")
 #isws
     def update_species(self,species):
-        pass
-            
+        if species in self.species_list:
+            new_name=str(input("Enter a new name."))
+            new_population=int(input("Enter a new population."))
+            new_growthrate=int(input("Enter a new growth rate."))
+            new_mutationrate=float(input("Enter a new mutation rate."))
+            species.name=new_name
+            species.population=new_population
+            species.growth_rate=new_growthrate
+            species.mutation_rate=new_mutationrate
+            return f"New Name: {species.name}, New Population: {species.population}, New Growth Rate: {species.growth_rate}, New Mutation Rate: {species.mutation_rate}"
+        else:
+            raise ValueError(f"Species {species} not found in the ecosystem {self}.")
 
     def display(self):
-        pass
+        return f"Resources Available: {self.resources},Species List {self.species_list} "
 
     def update_resources(self, num_resources):
         pass
@@ -91,9 +101,14 @@ class Ecosystem:
         pass 
 
 
-print(d)
+print(e)
 e=Ecosystem(100000,[])
 e.add_species(d)
 print(e.search_species(d))
-e.remove_species(d)
 print(e.species_list)
+e.remove_species(d)
+c=Species("Cat",20,40,random.random())
+e.search_species(d)
+e.update_species(c)
+print(e.species_list)
+print(e.display())
