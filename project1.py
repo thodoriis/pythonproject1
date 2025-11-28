@@ -78,28 +78,7 @@ class Ecosystem:
             raise ValueError(f"Species {species} not found in the ecosystem {self}.")
 #isws
     def update_species(self,species):
-        if species in self.species_list:
-            return species
-            while True:
-                x=str(input("Would you like to update the species?"))
-                if x.lower()=="yes":
-                    name=str(input("Enter new name:"))
-                    population=int(input("Enter new population:"))
-                    growth_rate=int(input("Enter new growth rate:"))
-                    mutation_rate=float(input("Enter new mutation rate:"))
-                    old_species=species
-                    species.name=name
-                    species.population=population
-                    species.growth_rate=growth_rate
-                    species.mutation_rate=mutation_rate
-                    print(f"Species updated. Old Species: {old_species}, New Species: {species}")
-                    break
-                elif x.lower()=="no":
-                    break
-                else:
-                    print("Invalid input. Please enter 'yes' or 'no'.")
-        else:
-            raise ValueError(f"Species {species} not found in the ecosystem {self}.")
+        pass
             
 
     def display(self):
