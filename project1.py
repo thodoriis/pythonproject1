@@ -20,8 +20,11 @@ class Species:
     def mutate(self):
         random_choice = random.choices ([0,1],weights=[self.mutation_rate,1-self.mutation_rate])[0]
         if random_choice == 0:
-            self.growth_rate=self.growth_rate * random.choice([1.1,0.7])
-
+            print(f"Past Growth Rate: {self.growth_rate}")
+            self.growth_rate=round(self.growth_rate * random.choice([1.1,0.7]))
+            print(f"New Growth Rate: {self.growth_rate}")
+        else:
+            print("No Mutation Happened.")
 
     def __str__(self):
         return f"Species Name: {self.name}, Population: {self.population}, Growth Rate: {self.growth_rate}, Mutation Rate: {self.mutation_rate}"
@@ -92,18 +95,42 @@ class Ecosystem:
             raise ValueError(f"Species {species} not found in the ecosystem {self}.")
 
     def display(self):
-        return f"Resources Available: {self.resources},Species List {self.species_list} "
+        print(f"Ecosystem Resources: {self.resources}")
+        if len(self.species_list)==0:
+            print("No Species Found.")
+        else:
+                for species in self.species_list:
+                    print(f"{species}")
 
     def update_resources(self, num_resources):
-        pass
+        print(f"Current amount of resources: {self.resources}")
+        new_resources=self.resources+num_resources
+        if new_resources<0:
+            while True:
+                num_resources=int(input("Can't lose that many resources. Enter a new change in resources"))
+                new_resources=self.resources+num_resources
+                if new_resources>=0:
+                    break
+        print(f"New Resources:{new_resources}")
+        self.resources=new_resources
 
     def run_generation(self):
-        pass 
+        population_sum=0
+        for species in self.species_list:
+            species.mutate()
+            species.reproduce(self.resources)
+            population_sum=population_sum + species.population
+        self.update_resources(-population_sum)
 
-
+    def __str__(self):
+        print(f"Resources: {self.resources}")
+        for species in self.species_list:
+            print(f"Species:{self.name}")
 print(e)
 e=Ecosystem(100000,[])
 e.add_species(d)
+e.add_species(c)
+
 print(e.search_species(d))
 print(e.species_list)
 e.remove_species(d)
@@ -112,3 +139,8 @@ e.search_species(d)
 e.update_species(c)
 print(e.species_list)
 print(e.display())
+e.display()
+q=Ecosystem(23000,[])
+q.display()
+e.run_generation()
+e.update_resources(-600000)
