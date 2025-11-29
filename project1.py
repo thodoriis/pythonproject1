@@ -63,23 +63,22 @@ class Ecosystem:
     def add_species(self, species):
         if species not in self.species_list:
             self.species_list.append(species)
-            print(f"Species {species} added to the ecosystem {self}.")
+            print(f"Species {species} added to the ecosystem.")
         else:
-            raise ValueError(f"Species {species} already exists in the ecosystem {self}.")
+            raise ValueError(f"Species {species} already exists in the ecosystem.")
 
-    def search_species(self, species):
-        if species in self.species_list:
-            return species
-        else:
-            raise ValueError(f"Species {species} not found in the ecosystem {self}.")
+    def search_species(self, speciesname):
+        for species in self.species_list:
+            if species.name == speciesname:
+                return species
+        raise ValueError(f"Species {speciesname} not found in the ecosystem.")
 
-
-    def remove_species(self,species):
-        if species in self.species_list:
-            self.species_list.remove(species)
-            print(f"Species {species} removed from the ecosystem {self}.")
-        else:
-            raise ValueError(f"Species {species} not found in the ecosystem {self}.")
+    def remove_species(self,speciesname):
+        for species in self.species_list:
+            if species.name == speciesname:
+                self.species_list.remove(species)
+                return f"Species {speciesname} removed from the ecosystem."
+        raise ValueError(f"Species {species} not found in the ecosystem.")
 #isws
     def update_species(self,species):
         if species in self.species_list:
@@ -93,7 +92,7 @@ class Ecosystem:
             species.mutation_rate=new_mutationrate
             return f"New Name: {species.name}, New Population: {species.population}, New Growth Rate: {species.growth_rate}, New Mutation Rate: {species.mutation_rate}"
         else:
-            raise ValueError(f"Species {species} not found in the ecosystem {self}.")
+            raise ValueError(f"Species {species} not found in the ecosystem.")
 
     def display(self):
         print(f"Ecosystem Resources: {self.resources}")
@@ -118,6 +117,7 @@ class Ecosystem:
     def run_generation(self):
         population_sum=0
         for species in self.species_list:
+            print(species.name)
             species.mutate()
             species.reproduce(self.resources)
             population_sum=population_sum + species.population
@@ -136,7 +136,6 @@ e.add_species(c)
 e.add_species(f)
 f=Species("Elephant",2,9000000,0.99)
 print(e.search_species(d))
-print(e.species_list)
 e.remove_species(d)
 c=Species("Cat",20,40,random.random())
 e.search_species(f)
@@ -148,3 +147,79 @@ q=Ecosystem(23000,[])
 q.display()
 e.run_generation()
 e.update_resources(-600000)
+#tsekare an prepei stin prosomoiwsh na epistrefei to poso katanalwse kathe eidos
+
+def simulate_generations(ecosystems, generations, resources):
+    ecosystems.resources=resources
+    gen_count=1
+    while gen_count<=generations and ecosystems.resources>0:
+        print(f"Generation{gen_count}")
+        x=ecosystems.run_generation()  #gia na epistrefei to return
+        print(x)
+        gen_count+=1
+        resources=ecosystems.resources
+    if gen_count<generations:
+        if resources==0 and gen_count==1: #gia ama valei input resources mhden
+            return f"All animals left without food. Please input a positve number of resources."
+        else:
+            return f"The simulation ended at generation {gen_count} due to lack of resources. {abs(resources)} animals were left without food."
+    else:
+        if resources<=0:
+            return f"Resources ran out at the last generation. {resources} animals left without food."  
+        else:
+            return f"Simulation complete. {resources} resources left."
+simulate_generations(e,20,10000000000)
+simulate_generations(e,5,5)
+simulate_generations(e,5,0)
+
+
+def menu():
+    print(
+       """ 1. Create New Ecosystem
+       2. Display Ecosystem Data
+       3. Add New Species
+       4. Search Species
+       5. Update Species
+       6. Remove Species
+       7. Display Species List
+       8. Update Resources
+       9. Simulate Generations
+       10. Exit"""
+    )
+menu()
+
+def main():
+    n=list(range(1,11))
+    menu()
+    choice=int(input("Please select an action."))
+    while choice not in n:
+        choice=int(input("Selection must be a number between 1-10, please pick again."))
+    while choice!=10:
+        if choice==1:
+            EcName=str(input("Enter a name for the new ecosystem."))
+            EcRes=int(input("Enter the amount of resources for the new ecosystem."))
+            EcName=Ecosystem(EcRes,[])
+            print()
+        else:
+            try:
+                EcName
+            except NameError:
+               print("You must create an environment first.")
+            else:
+                if choice==2:
+                    EcName.display()
+                elif choice==3:
+                    SpName=str(input("Enter species name."))
+                    SpPop=int(input("Enter species population."))
+                    SpGR=int(input("Enter species growth rate."))
+                    SpMR=float(input("Enter species mutation rate."))
+                    SpName=Species(SpName,SpPop,SpGR,SpMR)
+                    EcName.add_species(SpName)
+                elif choice==4:
+                    SpName=str(input("Enter species name."))
+                    EcName.search_species(SpName)
+ #prepei na kanei update o plythismos kai print ta resources se kathe genia  
+ #
+ # 
+ # 
+ # ftiakse kai to update resources na dexetai mono to onoma     
