@@ -1,4 +1,7 @@
-import random
+#Thodoris Apostolidis 62300008
+#Giorgos Toufekoulas 6230103
+
+import random           
 
 class Species:
 
